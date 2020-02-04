@@ -27,6 +27,8 @@ namespace src.Data
 
         public DbSet<src.Models.Product> Product { get; set; }
 
+        public DbSet<src.Models.ProductCategory> ProductCategory { get; set; }
+
         public DbSet<src.Models.Customer> Customer { get; set; }
 
         public DbSet<src.Models.Contact> Contact { get; set; }

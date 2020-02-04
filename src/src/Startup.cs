@@ -49,7 +49,7 @@ namespace src
                 options.User.RequireUniqueEmail = true;
 
                 // email confirmation require
-                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedEmail = false;
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
