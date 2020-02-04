@@ -11,7 +11,7 @@ namespace src.Models
         public Product()
         {
             this.thumbUrl = "/images/no-image-available.png";
-            this.productCategory = Enum.ProductCategory.Other;
+            //this.productCategory = Enum.ProductCategory.Other;
         }
         public Guid productId { get; set; }
         [Display(Name = "Product Name")]
@@ -25,7 +25,7 @@ namespace src.Models
         [Display(Name = "Thumb URL")]
         public string thumbUrl { get; set; }
         [Display(Name = "Product Category")]
-        public Enum.ProductCategory productCategory { get; set; }
+        public ProductCategory productCategory { get; set; }
 
 
         public Guid organizationId { get; set; }
