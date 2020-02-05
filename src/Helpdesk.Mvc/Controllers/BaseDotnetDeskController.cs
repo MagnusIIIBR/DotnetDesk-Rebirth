@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Helpdesk.Mvc.Data;
-using Helpdesk.Mvc.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Helpdesk.Mvc.Controllers
 {
-    public class BaseDotnetDeskController : Controller
+	public class BaseDotnetDeskController : Controller
     {
         protected bool IsHaveEnoughAccessRight()
         {

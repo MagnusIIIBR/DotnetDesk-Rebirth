@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Helpdesk.Mvc.Data;
 using Helpdesk.Mvc.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 
 namespace Helpdesk.Mvc.Controllers
 {
@@ -24,6 +24,10 @@ namespace Helpdesk.Mvc.Controllers
 				return NotFound();
 			}
 			Organization organization = _context.Organization.Where(x => x.organizationId.Equals(org)).FirstOrDefault();
+
+			IList<ProductCategory> productCategories = _context.ProductCategory.Where(x => x.organizationId.Equals(org)).ToList();
+			ViewBag.productCategoryId = new SelectList(productCategories, "productCategoryId", "categoryName");
+
 			ViewData["org"] = org;
 			return View(organization);
 		}
@@ -34,11 +38,20 @@ namespace Helpdesk.Mvc.Controllers
 			{
 				Product product = new Product();
 				product.organizationId = org;
+
+				IList<ProductCategory> productCategories = _context.ProductCategory.Where(x => x.organizationId.Equals(org)).ToList();
+				ViewBag.productCategoryId = new SelectList(productCategories, "productCategoryId", "categoryName");
+
 				return View(product);
 			}
 			else
 			{
-				return View(_context.Product.Where(x => x.productId.Equals(id)).FirstOrDefault());
+				Product product = _context.Product.Where(x => x.productId.Equals(id)).FirstOrDefault();
+
+				IList<ProductCategory> productCategories = _context.ProductCategory.Where(x => x.organizationId.Equals(product.organizationId)).ToList();
+				ViewBag.productCategoryId = new SelectList(productCategories, "productCategoryId", "categoryName", product.productCategoryId);
+
+				return View(product);
 			}
 
 		}

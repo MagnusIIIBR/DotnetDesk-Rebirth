@@ -3,14 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Helpdesk.Mvc.Data;
 using Helpdesk.Mvc.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Helpdesk.Mvc.Services
 {
-    public interface IDotnetdesk
+	public interface IDotnetdesk
     {
         Task SendEmailBySendGridAsync(string apiKey, string fromEmail, string fromFullName, string subject, string message, string email);
 

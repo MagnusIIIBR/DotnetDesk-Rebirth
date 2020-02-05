@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Helpdesk.Mvc.Data;
+using Helpdesk.Mvc.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using src.Data;
-using src.Models;
 
 namespace src.Controllers.Api
 {
@@ -103,7 +101,7 @@ namespace src.Controllers.Api
 
 		private bool ProductCategoryExists(Guid id)
 		{
-			return _context.Product.Any(e => e.productId == id);
+			return _context.ProductCategory.Any(e => e.productCategoryId == id);
 		}
 	}
 }

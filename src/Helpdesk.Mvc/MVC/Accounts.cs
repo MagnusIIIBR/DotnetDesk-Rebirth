@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Helpdesk.Mvc.MVC
+﻿namespace Helpdesk.Mvc.MVC
 {
-    public static class Accounts
+	public static class Accounts
     {
         public static class Login
         {

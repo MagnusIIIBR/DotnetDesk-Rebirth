@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Helpdesk.Mvc.Data;
+using Helpdesk.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
-using src.Data;
-using src.Models;
 
 namespace src.Controllers
 {

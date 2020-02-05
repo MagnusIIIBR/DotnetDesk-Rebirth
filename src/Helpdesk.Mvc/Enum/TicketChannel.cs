@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Helpdesk.Mvc.Enum
+﻿namespace Helpdesk.Mvc.Enum
 {
-    public enum TicketChannel
+	public enum TicketChannel
     {
         Other = 0,
         Phone = 1,

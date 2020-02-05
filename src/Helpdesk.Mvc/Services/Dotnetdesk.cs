@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using Helpdesk.Mvc.Data;
@@ -9,14 +8,13 @@ using Helpdesk.Mvc.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Helpdesk.Mvc.Services
 {
-    public class Dotnetdesk : IDotnetdesk
+	public class Dotnetdesk : IDotnetdesk
     {
         public async Task SendEmailBySendGridAsync(string apiKey, string fromEmail, string fromFullName, string subject, string message, string email)
         {

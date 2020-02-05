@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Helpdesk.Mvc.Enum
 {
-    public enum TicketStatus
+	public enum TicketStatus
     {
         Unassigned = 1,
         Open = 2,

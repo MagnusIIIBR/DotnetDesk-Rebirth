@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Helpdesk.Mvc.Data;
 using Helpdesk.Mvc.Models;
 
 namespace Helpdesk.Mvc.Controllers
 {
-    public class ContactController : Controller
+	public class ContactController : Controller
     {
         private readonly ApplicationDbContext _context;
 

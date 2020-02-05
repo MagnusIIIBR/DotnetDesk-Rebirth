@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +12,7 @@ using Helpdesk.Mvc.Services;
 
 namespace Helpdesk.Mvc.Controllers.Api
 {
-    [Produces("application/json")]
+	[Produces("application/json")]
     [Route("api/UploadFile")]
     [Authorize]
     public class UploadFileController : Controller

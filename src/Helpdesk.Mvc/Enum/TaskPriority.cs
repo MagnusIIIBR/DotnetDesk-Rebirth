@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Helpdesk.Mvc.Enum
+﻿namespace Helpdesk.Mvc.Enum
 {
-    public enum TaskPriority
+	public enum TaskPriority
     {
         High = 1,
         Highest = 2,

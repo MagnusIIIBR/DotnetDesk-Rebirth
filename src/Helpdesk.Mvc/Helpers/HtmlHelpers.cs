@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace src
 {
-    public static class HtmlHelpers
+	public static class HtmlHelpers
     {
 
         public static string IsSelected(this IHtmlHelper html, string controller = null, string action = null, string cssClass = null)

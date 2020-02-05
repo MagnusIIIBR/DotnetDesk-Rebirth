@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Helpdesk.Mvc.Models
 {
-    public class SupportAgent : BaseEntity
+	public class SupportAgent : BaseEntity
     {
         public Guid supportAgentId { get; set; }
         [Required]

@@ -1,11 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace Helpdesk.Mvc.Migrations
 {
-    public partial class initialdb : Migration
+    public partial class Start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,9 +12,9 @@ namespace Helpdesk.Mvc.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true)
+                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -28,27 +26,27 @@ namespace Helpdesk.Mvc.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    FullName = table.Column<string>(maxLength: 100, nullable: true),
-                    IsCustomer = table.Column<bool>(nullable: false),
-                    IsSuperAdmin = table.Column<bool>(nullable: false),
-                    IsSupportAgent = table.Column<bool>(nullable: false),
-                    IsSupportEngineer = table.Column<bool>(nullable: false),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
+                    Email = table.Column<string>(maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(nullable: false),
                     PasswordHash = table.Column<string>(nullable: true),
+                    SecurityStamp = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    ProfilePictureUrl = table.Column<string>(maxLength: 250, nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    WallpaperPictureUrl = table.Column<string>(maxLength: 250, nullable: true)
+                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
+                    LockoutEnabled = table.Column<bool>(nullable: false),
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    FullName = table.Column<string>(maxLength: 100, nullable: true),
+                    ProfilePictureUrl = table.Column<string>(maxLength: 250, nullable: true),
+                    WallpaperPictureUrl = table.Column<string>(maxLength: 250, nullable: true),
+                    IsSuperAdmin = table.Column<bool>(nullable: false),
+                    IsCustomer = table.Column<bool>(nullable: false),
+                    IsSupportAgent = table.Column<bool>(nullable: false),
+                    IsSupportEngineer = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,10 +60,10 @@ namespace Helpdesk.Mvc.Migrations
                     organizationId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
-                    description = table.Column<string>(maxLength: 200, nullable: true),
                     organizationName = table.Column<string>(maxLength: 100, nullable: false),
-                    organizationOwnerId = table.Column<string>(nullable: true),
-                    thumbUrl = table.Column<string>(maxLength: 255, nullable: true)
+                    description = table.Column<string>(maxLength: 200, nullable: true),
+                    thumbUrl = table.Column<string>(maxLength: 255, nullable: true),
+                    organizationOwnerId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,10 +75,10 @@ namespace Helpdesk.Mvc.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    RoleId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,7 +88,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,10 +96,10 @@ namespace Helpdesk.Mvc.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    ClaimValue = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,7 +109,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -131,7 +129,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -149,13 +147,13 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +173,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -185,16 +183,16 @@ namespace Helpdesk.Mvc.Migrations
                     customerId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
-                    address = table.Column<string>(maxLength: 100, nullable: true),
                     customerName = table.Column<string>(maxLength: 100, nullable: false),
-                    customerType = table.Column<int>(nullable: false),
                     description = table.Column<string>(maxLength: 200, nullable: true),
-                    email = table.Column<string>(maxLength: 100, nullable: true),
-                    linkedin = table.Column<string>(maxLength: 100, nullable: true),
-                    organizationId = table.Column<Guid>(nullable: false),
-                    phone = table.Column<string>(maxLength: 20, nullable: true),
                     thumbUrl = table.Column<string>(maxLength: 255, nullable: true),
-                    website = table.Column<string>(maxLength: 100, nullable: true)
+                    customerType = table.Column<int>(nullable: false),
+                    address = table.Column<string>(maxLength: 100, nullable: true),
+                    phone = table.Column<string>(maxLength: 20, nullable: true),
+                    email = table.Column<string>(maxLength: 100, nullable: true),
+                    website = table.Column<string>(maxLength: 100, nullable: true),
+                    linkedin = table.Column<string>(maxLength: 100, nullable: true),
+                    organizationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,31 +202,30 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.organizationId,
                         principalTable: "Organization",
                         principalColumn: "organizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "ProductCategory",
                 columns: table => new
                 {
-                    productId = table.Column<Guid>(nullable: false),
+                    productCategoryId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
+                    categoryName = table.Column<string>(maxLength: 100, nullable: false),
                     description = table.Column<string>(maxLength: 200, nullable: true),
-                    organizationId = table.Column<Guid>(nullable: false),
-                    productCategory = table.Column<int>(nullable: false),
-                    productName = table.Column<string>(maxLength: 100, nullable: false),
-                    thumbUrl = table.Column<string>(maxLength: 255, nullable: true)
+                    thumbUrl = table.Column<string>(maxLength: 255, nullable: true),
+                    organizationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.productId);
+                    table.PrimaryKey("PK_ProductCategory", x => x.productCategoryId);
                     table.ForeignKey(
-                        name: "FK_Product_Organization_organizationId",
+                        name: "FK_ProductCategory_Organization_organizationId",
                         column: x => x.organizationId,
                         principalTable: "Organization",
                         principalColumn: "organizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -238,10 +235,10 @@ namespace Helpdesk.Mvc.Migrations
                     supportAgentId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
+                    supportAgentName = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
                     applicationUserId = table.Column<string>(nullable: true),
-                    organizationId = table.Column<Guid>(nullable: false),
-                    supportAgentName = table.Column<string>(maxLength: 100, nullable: false)
+                    organizationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,7 +254,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.organizationId,
                         principalTable: "Organization",
                         principalColumn: "organizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -265,10 +262,10 @@ namespace Helpdesk.Mvc.Migrations
                 columns: table => new
                 {
                     supportEngineerId = table.Column<Guid>(nullable: false),
+                    supportEngineerName = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(maxLength: 100, nullable: false),
                     applicationUserId = table.Column<string>(nullable: true),
-                    organizationId = table.Column<Guid>(nullable: false),
-                    supportEngineerName = table.Column<string>(maxLength: 100, nullable: false)
+                    organizationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -284,7 +281,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.organizationId,
                         principalTable: "Organization",
                         principalColumn: "organizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -294,20 +291,20 @@ namespace Helpdesk.Mvc.Migrations
                     ticketId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
-                    contactId = table.Column<Guid>(nullable: false),
-                    customerId = table.Column<Guid>(nullable: false),
+                    ticketName = table.Column<string>(maxLength: 100, nullable: false),
                     description = table.Column<string>(maxLength: 200, nullable: false),
+                    customerId = table.Column<Guid>(nullable: false),
+                    contactId = table.Column<Guid>(nullable: false),
                     email = table.Column<string>(maxLength: 100, nullable: true),
-                    organizationId = table.Column<Guid>(nullable: false),
                     phone = table.Column<string>(maxLength: 20, nullable: true),
-                    productId = table.Column<Guid>(nullable: false),
+                    ticketStatus = table.Column<int>(nullable: false),
                     supportAgentId = table.Column<Guid>(nullable: false),
                     supportEngineerId = table.Column<Guid>(nullable: false),
-                    ticketChannel = table.Column<int>(nullable: false),
-                    ticketName = table.Column<string>(maxLength: 100, nullable: false),
+                    productId = table.Column<Guid>(nullable: false),
+                    ticketType = table.Column<int>(nullable: false),
                     ticketPriority = table.Column<int>(nullable: false),
-                    ticketStatus = table.Column<int>(nullable: false),
-                    ticketType = table.Column<int>(nullable: false)
+                    ticketChannel = table.Column<int>(nullable: false),
+                    organizationId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -317,7 +314,7 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.organizationId,
                         principalTable: "Organization",
                         principalColumn: "organizationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,16 +324,16 @@ namespace Helpdesk.Mvc.Migrations
                     contactId = table.Column<Guid>(nullable: false),
                     CreateAt = table.Column<DateTime>(nullable: false),
                     CreateBy = table.Column<string>(nullable: true),
-                    applicationUserId = table.Column<string>(nullable: true),
                     contactName = table.Column<string>(maxLength: 100, nullable: false),
-                    customerId = table.Column<Guid>(nullable: false),
                     description = table.Column<string>(maxLength: 200, nullable: true),
-                    email = table.Column<string>(maxLength: 100, nullable: false),
-                    linkedin = table.Column<string>(maxLength: 100, nullable: true),
-                    phone = table.Column<string>(maxLength: 20, nullable: true),
-                    secondaryEmail = table.Column<string>(maxLength: 100, nullable: true),
                     thumbUrl = table.Column<string>(maxLength: 255, nullable: true),
-                    website = table.Column<string>(maxLength: 100, nullable: true)
+                    email = table.Column<string>(maxLength: 100, nullable: false),
+                    secondaryEmail = table.Column<string>(maxLength: 100, nullable: true),
+                    phone = table.Column<string>(maxLength: 20, nullable: true),
+                    website = table.Column<string>(maxLength: 100, nullable: true),
+                    linkedin = table.Column<string>(maxLength: 100, nullable: true),
+                    applicationUserId = table.Column<string>(nullable: true),
+                    customerId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -352,7 +349,37 @@ namespace Helpdesk.Mvc.Migrations
                         column: x => x.customerId,
                         principalTable: "Customer",
                         principalColumn: "customerId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Product",
+                columns: table => new
+                {
+                    productId = table.Column<Guid>(nullable: false),
+                    CreateAt = table.Column<DateTime>(nullable: false),
+                    CreateBy = table.Column<string>(nullable: true),
+                    productName = table.Column<string>(maxLength: 100, nullable: false),
+                    description = table.Column<string>(maxLength: 200, nullable: true),
+                    thumbUrl = table.Column<string>(maxLength: 255, nullable: true),
+                    productCategoryId = table.Column<Guid>(nullable: false),
+                    organizationId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.productId);
+                    table.ForeignKey(
+                        name: "FK_Product_Organization_organizationId",
+                        column: x => x.organizationId,
+                        principalTable: "Organization",
+                        principalColumn: "organizationId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Product_ProductCategory_productCategoryId",
+                        column: x => x.productCategoryId,
+                        principalTable: "ProductCategory",
+                        principalColumn: "productCategoryId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -412,6 +439,16 @@ namespace Helpdesk.Mvc.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Product_organizationId",
                 table: "Product",
+                column: "organizationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_productCategoryId",
+                table: "Product",
+                column: "productCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductCategory_organizationId",
+                table: "ProductCategory",
                 column: "organizationId");
 
             migrationBuilder.CreateIndex(
@@ -477,6 +514,9 @@ namespace Helpdesk.Mvc.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customer");
+
+            migrationBuilder.DropTable(
+                name: "ProductCategory");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

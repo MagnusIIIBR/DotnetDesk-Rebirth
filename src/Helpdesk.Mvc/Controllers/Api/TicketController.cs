@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Helpdesk.Mvc.Data;
@@ -11,7 +9,7 @@ using Helpdesk.Mvc.Models;
 
 namespace Helpdesk.Mvc.Controllers.Api
 {
-    [Produces("application/json")]
+	[Produces("application/json")]
     [Route("api/Ticket")]
     [Authorize]
     public class TicketController : Controller

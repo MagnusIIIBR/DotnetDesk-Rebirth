@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ using Helpdesk.Mvc.Models;
 
 namespace Helpdesk.Mvc.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class ConfigController : BaseDotnetDeskController
     {
         private readonly ApplicationDbContext _context;
