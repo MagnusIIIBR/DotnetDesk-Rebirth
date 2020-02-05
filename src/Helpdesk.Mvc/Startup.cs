@@ -79,7 +79,12 @@ namespace Helpdesk.Mvc
 			// Get SMTP configuration options
 			services.Configure<SmtpOptions>(Configuration.GetSection("SmtpOptions"));
 
-			services.AddControllersWithViews();
+			//Inject ApplicationInsights
+			services.AddApplicationInsightsTelemetry(Configuration);
+
+			services.AddMvc();
+
+			services.AddControllers().AddNewtonsoftJson();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,9 +123,9 @@ namespace Helpdesk.Mvc
 
 			app.UseRouting();
 
-			app.UseAuthorization();
-
 			app.UseAuthentication();
+			
+			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
