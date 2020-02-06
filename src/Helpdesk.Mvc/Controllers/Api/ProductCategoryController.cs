@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace src.Controllers.Api
+namespace Helpdesk.Mvc.Controllers.Api
 {
 	[Produces("application/json")]
 	[Route("api/ProductCategory")]

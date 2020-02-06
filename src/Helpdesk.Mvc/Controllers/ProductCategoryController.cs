@@ -4,7 +4,7 @@ using Helpdesk.Mvc.Data;
 using Helpdesk.Mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace src.Controllers
+namespace Helpdesk.Mvc.Controllers
 {
 	public class ProductCategoryController : Controller
 	{
