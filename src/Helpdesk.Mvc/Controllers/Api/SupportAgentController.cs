@@ -13,144 +13,144 @@ using Helpdesk.Mvc.Services;
 namespace Helpdesk.Mvc.Controllers.Api
 {
 	[Produces("application/json")]
-    [Route("api/SupportAgent")]
-    [Authorize]
-    public class SupportAgentController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-        private readonly IDotnetdesk _dotnetdesk;
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IEmailSender _emailSender;
+	[Route("api/SupportAgent")]
+	[Authorize]
+	public class SupportAgentController : Controller
+	{
+		private readonly ApplicationDbContext _context;
+		private readonly IDotnetdesk _dotnetdesk;
+		private readonly UserManager<ApplicationUser> _userManager;
+		private readonly IEmailSender _emailSender;
 
-        public SupportAgentController(ApplicationDbContext context,
-            IDotnetdesk dotnetdesk,
-            UserManager<ApplicationUser> userManager,
-            IEmailSender emailSender)
-        {
-            _context = context;
-            _dotnetdesk = dotnetdesk;
-            _userManager = userManager;
-            _emailSender = emailSender;
-        }
+		public SupportAgentController(ApplicationDbContext context,
+		    IDotnetdesk dotnetdesk,
+		    UserManager<ApplicationUser> userManager,
+		    IEmailSender emailSender)
+		{
+			_context = context;
+			_dotnetdesk = dotnetdesk;
+			_userManager = userManager;
+			_emailSender = emailSender;
+		}
 
-        // GET: api/SupportAgent
-        [HttpGet("{organizationId}")]
-        public IActionResult GetSupportAgent([FromRoute]Guid organizationId)
-        {
-            return Json(new { data = _context.SupportAgent.Where(x => x.organizationId.Equals(organizationId)).ToList() });
-        }
+		// GET: api/SupportAgent
+		[HttpGet("{organizationId}")]
+		public IActionResult GetSupportAgent([FromRoute]Guid organizationId)
+		{
+			return Json(new { data = _context.SupportAgent.Where(x => x.organizationId.Equals(organizationId)).ToList() });
+		}
 
-        // POST: api/SupportAgent
-        [HttpPost]
-        public async Task<IActionResult> PostSupportAgent([FromBody] SupportAgent supportAgent)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+		// POST: api/SupportAgent
+		[HttpPost]
+		public async Task<IActionResult> PostSupportAgent([FromBody] SupportAgent supportAgent)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-            if (supportAgent.supportAgentId == Guid.Empty)
-            {
-                try
-                {
-                    var user = new ApplicationUser { UserName = supportAgent.Email, Email = supportAgent.Email, FullName = supportAgent.supportAgentName };
-                    
-                    user.IsSupportAgent = true;
-                    var randomPassword = new Random().Next(0, 999999);
-                    var result = await _userManager.CreateAsync(user, randomPassword.ToString());
-                    if (result.Succeeded)
-                    {
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+			if (supportAgent.supportAgentId == Guid.Empty)
+			{
+				try
+				{
+					var user = new ApplicationUser { UserName = supportAgent.Email, Email = supportAgent.Email, FullName = supportAgent.supportAgentName };
 
-                        await _emailSender.SendEmailAsync(supportAgent.Email, "Confirm your email and Registration",
-                        $"Your email has been registered. With username:'{supportAgent.Email}'  and temporary  password:'{randomPassword.ToString()}' .Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>link</a>");
+					user.IsSupportAgent = true;
+					var randomPassword = new Random().Next(0, 999999);
+					var result = await _userManager.CreateAsync(user, randomPassword.ToString());
+					if (result.Succeeded)
+					{
+						var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+						var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
 
-                        supportAgent.applicationUser = user;
-                        Organization org = _context.Organization.Where(x => x.organizationId.Equals(supportAgent.organizationId)).FirstOrDefault();
-                        supportAgent.organization = org;
+						await _emailSender.SendEmailAsync(supportAgent.Email, "Confirm your email and Registration",
+						$"Your email has been registered. With username:'{supportAgent.Email}'  and temporary  password:'{randomPassword.ToString()}' .Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>link</a>");
 
-                        supportAgent.supportAgentId = Guid.NewGuid();
-                        _context.SupportAgent.Add(supportAgent);
+						supportAgent.applicationUser = user;
+						Organization org = _context.Organization.Where(x => x.organizationId.Equals(supportAgent.organizationId)).FirstOrDefault();
+						supportAgent.organization = org;
 
-                        await _context.SaveChangesAsync();
+						supportAgent.supportAgentId = Guid.NewGuid();
+						_context.SupportAgent.Add(supportAgent);
 
-                        return Json(new { success = true, message = "Add new data success." });
-                    }
-                    else
-                    {
-                        return Json(new { success = false, message = "UserManager CreateAsync Fail." });
-                    }
-                    
-                }
-                catch (Exception ex)
-                {
+						await _context.SaveChangesAsync();
 
-                    return Json(new { success = false, message = ex.Message });
-                }
+						return Json(new { success = true, message = "Add new data success." });
+					}
+					else
+					{
+						return Json(new { success = false, message = "UserManager CreateAsync Fail." });
+					}
 
-             
+				}
+				catch (Exception ex)
+				{
 
-               
-            }
-            else
-            {
-                try
-                {
-                    _context.Update(supportAgent);
+					return Json(new { success = false, message = ex.Message });
+				}
 
-                    await _context.SaveChangesAsync();
 
-                    return Json(new { success = true, message = "Edit data success." });
-                }
-                catch (Exception ex)
-                {
 
-                    return Json(new { success = false, message = ex.Message });
-                }
 
-            }
-        }
+			}
+			else
+			{
+				try
+				{
+					_context.Update(supportAgent);
 
-        // DELETE: api/SupportAgent/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSupportAgent([FromRoute] Guid id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+					await _context.SaveChangesAsync();
 
-            try
-            {
-                var supportAgent = await _context.SupportAgent.SingleOrDefaultAsync(m => m.supportAgentId == id);
-                if (supportAgent == null)
-                {
-                    return NotFound();
-                }
+					return Json(new { success = true, message = "Edit data success." });
+				}
+				catch (Exception ex)
+				{
 
-                string applicationUserId = supportAgent.applicationUserId;
+					return Json(new { success = false, message = ex.Message });
+				}
 
-                _context.SupportAgent.Remove(supportAgent);
-                await _context.SaveChangesAsync();
+			}
+		}
 
-                ApplicationUser appUser = await _userManager.FindByIdAsync(applicationUserId);
-                await _userManager.DeleteAsync(appUser);
+		// DELETE: api/SupportAgent/5
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> DeleteSupportAgent([FromRoute] Guid id)
+		{
+			if (!ModelState.IsValid)
+			{
+				return BadRequest(ModelState);
+			}
 
-                return Json(new { success = true, message = "Delete success." });
-            }
-            catch (Exception ex)
-            {
+			try
+			{
+				var supportAgent = await _context.SupportAgent.SingleOrDefaultAsync(m => m.supportAgentId == id);
+				if (supportAgent == null)
+				{
+					return NotFound();
+				}
 
-                return Json(new { success = false, message = ex.Message });
-            }
+				string applicationUserId = supportAgent.applicationUserId;
 
-           
-        }
+				_context.SupportAgent.Remove(supportAgent);
+				await _context.SaveChangesAsync();
 
-        private bool SupportAgentExists(Guid id)
-        {
-            return _context.SupportAgent.Any(e => e.supportAgentId == id);
-        }
-    }
+				ApplicationUser appUser = await _userManager.FindByIdAsync(applicationUserId);
+				await _userManager.DeleteAsync(appUser);
+
+				return Json(new { success = true, message = "Delete success." });
+			}
+			catch (Exception ex)
+			{
+
+				return Json(new { success = false, message = ex.Message });
+			}
+
+
+		}
+
+		private bool SupportAgentExists(Guid id)
+		{
+			return _context.SupportAgent.Any(e => e.supportAgentId == id);
+		}
+	}
 }

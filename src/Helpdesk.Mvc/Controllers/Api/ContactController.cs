@@ -54,10 +54,10 @@ namespace Helpdesk.Mvc.Controllers.Api
 
                 if (contact.contactId == Guid.Empty)
                 {
-                    var user = new ApplicationUser { UserName = contact.email, Email = contact.email, FullName = contact.contactName };
+                    var user = new ApplicationUser { UserName = contact.email, Email = contact.email, FullName = contact.contactName  };
 
                     user.IsCustomer = true;
-                    var randomPassword = new Random().Next(0, 999999);
+                    var randomPassword = new Random().Next(0, 999999999);
                     var result = await _userManager.CreateAsync(user, randomPassword.ToString());
 
                     if (result.Succeeded)
