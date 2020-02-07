@@ -1,26 +1,13 @@
 ﻿<!DOCTYPE html>
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-@inject Helpdesk.Mvc.Data.ApplicationDbContext Context
 @{
     var org = ViewData["org"];
     ApplicationUser appUser = await UserManager.GetUserAsync(User);
     var fullName = appUser != null ? appUser.FullName : "Untitled";
     var profilePicture = appUser != null ? appUser.ProfilePictureUrl : "#";
-    var organization = Context.Organization.Where(x => x.organizationId.Equals(org)).FirstOrDefault();
-    var organizationName = organization != null ? organization.organizationName : "Undefined";
-    var customerName = "";
-    Guid cust;
-    if (appUser.IsCustomer)
-    {
-        cust = (Guid)ViewData["cust"];
-        var customer = Context.Customer.Where(x => x.customerId.Equals(cust)).FirstOrDefault();
-        customerName = (customer != null) ? customer.customerName : "Undefined";
-
-    }
-
+    var wallpaperPicture = appUser != null ? appUser.WallpaperPictureUrl : "#";
 }
-
 <html>
 <head>
     <meta charset="utf-8">
@@ -40,7 +27,6 @@
         <link rel="stylesheet" href="~/lib/sweetalert/sweetalert.css" />
         <!--fontawesome-->
         <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
-
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -64,10 +50,12 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="~/lib/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="~/adminlte/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="~/adminlteV2/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="~/adminlte/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="~/adminlteV2/css/skins/_all-skins.min.css">
+    <!--blueimp file upload-->
+    <link rel="stylesheet" href="~/lib/jQuery-File-Upload-9.21.0/css/jquery.fileupload.css" />
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -78,7 +66,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     @RenderSection("Styles", required: false)
 </head>
-<body class="hold-transition skin-blue fixed">
+<body class="hold-transition skin-yellow sidebar-collapse">
     <!-- Site wrapper -->
     <div class="wrapper">
         <header class="main-header">
@@ -96,24 +84,32 @@
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
-                        <li class="dropdown messages-menu">
+                        <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-building-o"></i>
-                                @if (appUser.IsCustomer)
-                                {
-
-                                    <span class="hidden-xs"><b>@customerName</b></span>
-                                }
-                                else
-                                {
-
-                                    <span class="hidden-xs"><b>@organizationName</b></span>
-                                }
-
+                                <i class="fa fa-picture-o"></i>
+                                <span class="hidden-xs"><b>Wallpaper</b></span>
                             </a>
+                            <ul class="dropdown-menu">
+                                <!-- User image -->
+                                <li class="user-footer text-center">
+                                    <span class="btn btn-success fileinput-button">
+                                        <i class="fa fa-camera bg-green"></i>
+                                        <span>Select file ...</span>
+                                        <!-- The file input field used as target for the file upload widget -->
+                                        <input id="fileupload" type="file" name="files" multiple="">
+                                    </span>
+                                </li>
+                                <li class="user-footer">
+                                    <div id="progress" class="progress">
+                                        <div class="progress-bar progress-bar-success"></div>
+                                    </div>
+                                </li>
+
+                            </ul>
                         </li>
                         <!-- User Account: style can be found in dropdown.less -->
                         @Html.Partial("_ProfileSignout")
+
                     </ul>
                 </div>
             </nav>
@@ -126,81 +122,12 @@
                 <!-- Sidebar user panel -->
                 @Html.Partial("_UserPanel");
 
-                @if (appUser != null)
-                {
-                    <ul class="sidebar-menu" data-widget="tree">
-                            @if (appUser.IsSuperAdmin)
-                            {
-                                    <li class="header">MAIN NAVIGATION</li>
-                                    <li class="@Html.IsSelected(controller: "Customer")">
-                                            <a href="@Url.Action("Index", "Customer", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Customers</span>
-                                            </a>
-                                    </li>
-                                    <li class="@Html.IsSelected(controller: "Product")">
-                                            <a href="@Url.Action("Index", "Product", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Products</span>
-                                            </a>
-                                    </li>
-                                    <li class="@Html.IsSelected(controller: "ProductCategory")">
-                                            <a href="@Url.Action("Index", "ProductCategory", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Products Category</span>
-                                            </a>
-                                    </li>
-                                    <li class="@Html.IsSelected(controller: "SupportAgent")">
-                                            <a href="@Url.Action("Index", "SupportAgent", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Support Agents</span>
-                                            </a>
-                                    </li>
-                                    <li class="@Html.IsSelected(controller: "SupportEngineer")">
-                                            <a href="@Url.Action("Index", "SupportEngineer", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Support Engineers</span>
-                                            </a>
-                                    </li>
-                                    <li class="@Html.IsSelected(controller: "Ticket")">
-                                            <a href="@Url.Action("Index", "Ticket", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Ticket</span>
-                                            </a>
-                                    </li>
-                            }
-                            @*@if (appUser.IsCustomer)
-                {
-                    <li class="header">CUSTOMER NAVIGATION</li>
-                    <li class="@Html.IsSelected(controller: "Ticket")">
-                        <a href="@Url.Action("Customer", "Ticket", new { cust = cust })">
-                            <i class="fa fa-th"></i> <span>Ticket</span>
-                        </a>
-                    </li>
-                }*@
-                            @if (appUser.IsSupportAgent)
-                            {
-                                    <li class="header">SUPPORT AGENT NAVIGATION</li>
-                                    <li class="@Html.IsSelected(controller: "Ticket")">
-                                            <a href="@Url.Action("Index", "Ticket", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Ticket</span>
-                                            </a>
-                                    </li>
-                            }
-                            @if (appUser.IsSupportEngineer)
-                            {
-                                    <li class="header">SUPPORT ENGINEER NAVIGATION</li>
-                                    <li class="@Html.IsSelected(controller: "Ticket")">
-                                            <a href="@Url.Action("Index", "Ticket", new { org = org })">
-                                                    <i class="fa fa-th"></i> <span>Ticket</span>
-                                            </a>
-                                    </li>
-                            }
-
-                    </ul>
-                }
-
-
             </section>
             <!-- /.sidebar -->
         </aside>
         <!-- =============================================== -->
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="background-image: url(@wallpaperPicture); background-size: cover">
             @RenderBody()
         </div>
         <!-- /.content-wrapper -->
@@ -261,12 +188,34 @@
     <!-- FastClick -->
     <script src="~/lib/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
-    <script src="~/adminlte/js/adminlte.min.js"></script>
-
+    <script src="~/adminlteV2/js/adminlte.min.js"></script>
+    <!--blueimp file upload-->
+    <script src="~/lib/jQuery-File-Upload-9.21.0/js/jquery.fileupload.js"></script>
     <script>
         $(document).ready(function () {
             $('.sidebar-menu').tree()
         })
+    </script>
+    <script>
+        $(function () {
+
+            var url = '/api/UploadFile/Wallpaper';
+            $('#fileupload').fileupload({
+                url: url,
+                dataType: 'json',
+                done: function (e, data) {
+                    $(".content-wrapper").attr("style", "background-image: url(" + '../uploads/' + data.result + "); background-size: cover; min-height: 514px");
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                    );
+                }
+            }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        });
     </script>
 </body>
 </html>

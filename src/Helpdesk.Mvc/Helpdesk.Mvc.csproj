@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\adminlte\css\adminlte.css.map" />
-    <None Include="wwwroot\adminlte\css\adminlte.min.css.map" />
-    <None Include="wwwroot\adminlte\js\adminlte.js" />
-    <None Include="wwwroot\adminlte\js\adminlte.min.js" />
-    <None Include="wwwroot\adminlte\js\demo.js" />
-    <None Include="wwwroot\adminlte\js\pages\dashboard.js" />
-    <None Include="wwwroot\adminlte\js\pages\dashboard2.js" />
+    <None Include="wwwroot\adminlteV2\css\adminlte.css.map" />
+    <None Include="wwwroot\adminlteV2\css\adminlte.min.css.map" />
+    <None Include="wwwroot\adminlteV2\js\adminlte.js" />
+    <None Include="wwwroot\adminlteV2\js\adminlte.min.js" />
+    <None Include="wwwroot\adminlteV2\js\demo.js" />
+    <None Include="wwwroot\adminlteV2\js\pages\dashboard.js" />
+    <None Include="wwwroot\adminlteV2\js\pages\dashboard2.js" />
     <None Include="wwwroot\images\banner1.svg" />
     <None Include="wwwroot\images\banner2.svg" />
     <None Include="wwwroot\images\banner3.svg" />
