@@ -9,6 +9,11 @@
     {
       "library": "admin-lte@3.0.2",
       "destination": "wwwroot/admin-lte/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "icheck-bootstrap@3.0.1",
+      "destination": "wwwroot/lib/icheck-bootstrap/"
     }
   ]
 }

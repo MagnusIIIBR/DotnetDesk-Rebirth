@@ -36,8 +36,8 @@
 					<span asp-validation-for="Password" class="text-danger"></span>
 				</div>
 				<div class="row">
-					<div class="col-xs-8">
-						<div class="checkbox icheck">
+					<div class="col-8">
+						<div class="icheck-primary">
 							<label asp-for="RememberMe">
 								<input asp-for="RememberMe" />
 								@Html.DisplayNameFor(m => m.RememberMe)
@@ -45,15 +45,20 @@
 						</div>
 					</div>
 					<!-- /.col -->
-					<div class="col-xs-4">
+					<div class="col-4">
 						<button type="submit" class="btn btn-primary btn-block btn-flat">Log In</button>
 					</div>
 					<!-- /.col -->
 				</div>
 
+				<p class="mb-1">
+					<a href="@Helpdesk.Mvc.MVC.Accounts.ForgotPassword.FullUrl">I forgot my password</a>
+				</p>
+				<p class="mb-0">
+					<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-center">Register a new membership</a>
+				</p>
 
-				<a href="@Helpdesk.Mvc.MVC.Accounts.ForgotPassword.FullUrl">I forgot my password</a><br>
-				<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-center">Register a new membership</a>
+				
 			</form>
 		</div>
 	</div>
