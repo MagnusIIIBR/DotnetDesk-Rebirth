@@ -58,22 +58,22 @@
 					<a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="text-center">Register a new membership</a>
 				</p>
 
-				
+
 			</form>
 		</div>
 	</div>
 	<!-- /.form-box -->
 </div>
 
-	@section Scripts {
-		@await Html.PartialAsync("_ValidationScriptsPartial")
-		<script>
-			$(document).ready(function () {
-				var error = $('#error').val();
-				if (error) {
-					ShowMessageError(error);
-				}
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+	<script>
+		$(document).ready(function () {
+			var error = $('#error').val();
+			if (error) {
+				ShowMessageError(error);
+			}
 
-			});
-		</script>
-	}
+		});
+	</script>
+}

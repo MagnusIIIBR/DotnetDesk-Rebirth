@@ -14,6 +14,35 @@
       "provider": "jsdelivr",
       "library": "icheck-bootstrap@3.0.1",
       "destination": "wwwroot/lib/icheck-bootstrap/"
+    },
+    {
+      "library": "font-awesome@5.12.1",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "ionicons@5.0.0",
+      "destination": "wwwroot/lib/ionicons/"
+    },
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "jquery-validation@1.19.1",
+      "destination": "wwwroot/lib/jquery-validation/"
+    },
+    {
+      "library": "jquery-mousewheel@3.1.13",
+      "destination": "wwwroot/lib/jquery-mousewheel/"
+    },
+    {
+      "library": "jquery-mapael@2.2.0",
+      "destination": "wwwroot/lib/jquery-mapael/"
     }
   ]
 }
