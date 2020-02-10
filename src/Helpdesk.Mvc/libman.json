@@ -43,6 +43,16 @@
     {
       "library": "jquery-mapael@2.2.0",
       "destination": "wwwroot/lib/jquery-mapael/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "datatables.net@1.10.20",
+      "destination": "wwwroot/lib/datatables/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "datatables.net-bs4@1.10.20",
+      "destination": "wwwroot/lib/datatables.net-bs4/"
     }
   ]
 }
