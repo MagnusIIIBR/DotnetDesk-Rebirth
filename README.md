@@ -2,13 +2,13 @@
 Demonstration web app showing the capabilities of ASP.NET Core 2 MVC, EF (Entity Framework), Web API, Bootstrap, jQuery, datatables, adminlte template and many more. Web app created as helpdesk or ticket support portal.
 
 # Technology
-- ASP.NET Core 2 MVC
+- ASP.NET Core 3.1 MVC
 - EF (Entity Framework) Core Code First
 - jQuery
 - Ajax
-- ASP.NET Core 2 Web API
-- Adminlte template
-- datatables.net
+- ASP.NET Core 3.1 Web API
+- AdminLTE 3.x Template
+- Datatables.net
 - Dependency Injection
 - Email Handling (SendGrid and SMTP)
 - Custom 404/500 error handling
@@ -24,6 +24,7 @@ Demonstration web app showing the capabilities of ASP.NET Core 2 MVC, EF (Entity
 - Customer
 - Contact
 - Product
+- Product Categories
 - Agent
 - Engineer
 
