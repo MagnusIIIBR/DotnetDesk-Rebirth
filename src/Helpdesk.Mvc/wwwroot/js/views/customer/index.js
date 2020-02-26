@@ -5,20 +5,41 @@ var apiurl = '/api/' + entity;
 $(document).ready(function () {
         var organizationId = $('#organizationId').val();
         dataTable = $('#grid').DataTable({
+                "dom": 'Bfrtip',
                 "ajax": {
                         "url": apiurl + '/' + organizationId,
                         "type": 'GET',
                         "datatype": 'json'
                 },
+                "buttons": {
+                        buttons: [
+                                {
+                                        text: "Add New Customer",
+                                        action: function (e, dt, node, config) {
+                                                ShowPopup(`/${entity}/AddEdit?org=${organizationId}`);
+                                        }
+                                }
+                        ],
+                        dom: {
+                                button: {
+                                        tag: "button",
+                                        className: "btn btn-primary"
+                                },
+                                buttonLiner: {
+                                        tag: null
+                                }
+                        }
+                },
+                "columnDefs": [{ "width": "10%", "targets": 1 }],
                 "columns": [
                         { "data": "customerName" },
                         {
                                 "data": "customerId",
                                 "render": function (data) {
-                                        var btnDetail = "<a href='/Customer/detail?customerId=" + data + "' class='btn btn-block btn-default btn-flat btn-sm'><i class='fa fa-list'></i></a>";
-                                        var btnEdit = "<a class='btn btn-block btn-default btn-flat btn-sm' style='margin-left:2px' onclick=ShowPopup('/" + entity + "/AddEdit/" + data + "')><i class='fa fa-pencil'></i></a>";
-                                        var btnDelete = "<a class='btn btn-block btn-danger btn-flat btn-sm' style='margin-left:2px' onclick=Delete('" + data + "')><i class='fa fa-trash'></i></a>";
-                                        return btnDetail + btnEdit + btnDelete;
+                                        var btnDetail = "<a href='/Customer/detail?customerId=" + data + "' class='btn btn-default'><i class='fa fa-list'></i></a>";
+                                        var btnEdit = "<a class='btn btn-default' style='margin-left:2px' onclick=ShowPopup('/" + entity + "/AddEdit/" + data + "')><i class='fas fa-pencil-alt'></i></a>";
+                                        var btnDelete = "<a class='btn btn-danger' style='margin-left:2px' onclick=Delete('" + data + "')><i class='fa fa-trash'></i></a>";
+                                        return "<div class=\"btn-group-sm\" role=\"group\" aria-label=\"Basic example\">" + btnDetail + btnEdit + btnDelete + "</div>";
                                 }
                         }
                 ],

@@ -79,9 +79,11 @@ namespace Helpdesk.Mvc
 			//Inject ApplicationInsights
 			services.AddApplicationInsightsTelemetry(Configuration);
 
-			services.AddMvc();
+			services.AddControllersWithViews()
+				.AddRazorRuntimeCompilation()
+				.AddNewtonsoftJson();
 
-			services.AddControllers().AddNewtonsoftJson();
+			//services.AddControllers().AddNewtonsoftJson();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

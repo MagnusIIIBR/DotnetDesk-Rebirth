@@ -11,34 +11,26 @@
 		<div class="col-12">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">DataTable with minimal features & hover style</h3>
+					<h3 class="card-title">Customer Panel</h3>
 				</div>
 				<!-- /.card-header -->
 				<div class="card-body">
 
-					@*<div class="card-tools">
-								<button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-									<i class="fas fa-minus"></i>
-								</button>
-								<button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-									<i class="fas fa-times"></i>
-								</button>
-							</div>
-						</div>*@
-
 					<input type="hidden" asp-for="@Model.organizationId" />
-					<table id="grid" name="grid" class="table table-bordered table-hover">
-						<thead>
-							<tr >
-								<th scope="col" class="col-6">Customer</th>
-								<th scope="col" class="col-4"></th>
-							</tr>
-						</thead>
-					</table>
+					<div class="table-responsive">
+						<table id="grid" name="grid" class="table">
+							<thead>
+								<tr>
+									<th scope="col">Customer</th>
+									<th scope="col"></th>
+								</tr>
+							</thead>
+						</table>
+					</div>
 				</div>
 				<!-- /.card-body -->
 				<div class="card-footer">
-					Footer
+					@DateTime.Now.ToShortDateString() - @DateTime.Now.ToLongTimeString()
 				</div>
 				<!-- /.card-footer-->
 			</div>
@@ -48,18 +40,10 @@
 </section>
 <!-- /.content -->
 <!-- /.content-wrapper -->
-<div class="col-lg-2">
-	<div class="row">
-		<div class="col-md-12">
-			<a class="btn btn-success" style="margin-bottom:10px" onclick="ShowPopup('@Url.Action("AddEdit","Customer", new { org = Model.organizationId })')"><i class="fa fa-plus"></i> Add New Customer</a>
-		</div>
-	</div>
-</div>
-
 <!-- /.content -->
 <!--modal placeholder-->
-<div class="modal modal-primary fade" id="modalDefault">
-	<div class="modal-dialog">
+<div class="modal fade modal-primary" id="modalDefault">
+	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 
 		</div>
