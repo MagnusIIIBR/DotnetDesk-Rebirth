@@ -3,7 +3,7 @@
 @inject Helpdesk.Mvc.Data.ApplicationDbContext Context
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_LayoutAdminlteV2Wallpaper.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdminlteV3Wallpaper.cshtml";
     ApplicationUser appUser = await UserManager.GetUserAsync(User);
     Guid cust = Guid.Empty;
     if (appUser.IsCustomer)
